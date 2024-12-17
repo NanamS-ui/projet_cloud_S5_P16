@@ -2,17 +2,19 @@
 
 namespace App\Entity;
 
+use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: RoleRepository::class)]
 #[ORM\Table(name: 'role')]
 class Role
 {
     #[ORM\Id]
-    #[ORM\Column(name:'role_id',type: 'string', length: 50)]
-    private string $roleId;
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'role_id', type: 'integer')]
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 50, unique: true)]
     private string $name;
@@ -25,14 +27,14 @@ class Role
         $this->users = new ArrayCollection();
     }
 
-    public function getRoleId(): ?string
+    public function getRoleId(): ?int
     {
-        return $this->roleId;
+        return $this->id;
     }
 
-    public function setRoleId(string $role_id): self
+    public function setRoleId(int $role_id): self
     {
-        $this->roleId = $role_id;
+        $this->id = $role_id;
 
         return $this;
     }

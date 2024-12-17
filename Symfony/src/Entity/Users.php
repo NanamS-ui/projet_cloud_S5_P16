@@ -4,13 +4,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: 'App\Repository\UsersRepository')]
 #[ORM\Table(name: 'users')]
 class Users
 {
     #[ORM\Id]
-    #[ORM\Column(name:'user_id',type: 'string', length: 50)]
-    private string $userId;
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'user_id', type: 'integer')]
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 50, unique: true)]
     private string $username;
@@ -21,7 +22,7 @@ class Users
     #[ORM\Column(type: 'string', length: 50, unique: true)]
     private string $email;
 
-    #[ORM\Column(name:'birth_date',type: 'date')]
+    #[ORM\Column(name: 'birth_date', type: 'date')]
     private \DateTimeInterface $birthDate;
 
     #[ORM\Column(type: 'string', length: 50, unique: true, nullable: true)]
@@ -35,14 +36,15 @@ class Users
     #[ORM\JoinColumn(name: 'role_id', referencedColumnName: 'role_id', nullable: false)]
     private Role $role;
 
-    public function getUserId(): ?string
+    // Getter et Setter pour userId
+    public function getUserId(): ?int
     {
-        return $this->userId;
+        return $this->id;
     }
 
-    public function setUserId(string $user_id): self
+    public function setUserId(int $userId): self
     {
-        $this->userId = $user_id;
+        $this->id = $userId;
 
         return $this;
     }
@@ -88,9 +90,9 @@ class Users
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTimeInterface $birth_date): self
+    public function setBirthDate(\DateTimeInterface $birthDate): self
     {
-        $this->birthDate = $birth_date;
+        $this->birthDate = $birthDate;
 
         return $this;
     }
